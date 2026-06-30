@@ -18,6 +18,7 @@ import (
 
 type Event struct {
 	ID      int
+	Event   string
 	Payload string
 }
 
@@ -94,7 +95,7 @@ func runRelayer(ctx context.Context, db *sql.DB, bus domain.EventPublisher) {
 			var events []Event
 			for rows.Next() {
 				var e Event
-				if err := rows.Scan(&e.ID, &e.Payload); err != nil {
+				if err := rows.Scan(&e.ID, &e.Event, &e.Payload); err != nil {
 					log.Printf("[ERROR] Error scanning event: %v", err)
 					continue
 				}

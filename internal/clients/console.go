@@ -12,7 +12,7 @@ func NewConsolePublisher() *ConsolePublisher {
 }
 
 func (c *ConsolePublisher) Publish(ctx context.Context, payload []byte) error {
-	log.Printf("[MOCK-BUS] Evento capturado: %s", string(payload))
+	log.Printf("[MOCK-BUS] Event captured: %s", string(payload))
 
 	return nil
 }
