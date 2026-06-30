@@ -35,6 +35,7 @@ func main() {
 	schema := `
     CREATE TABLE IF NOT EXISTS events (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
+		event TEXT NOT NULL,
         payload TEXT NOT NULL, 
         status TEXT NOT NULL DEFAULT 'pending'
     );`
@@ -84,7 +85,7 @@ func runRelayer(ctx context.Context, db *sql.DB, bus domain.EventPublisher) {
 			log.Println("[INFO] Stop signal received. Diplomatic Corps is withdrawing.")
 			return
 		case <-ticker.C:
-			rows, err := db.Query("SELECT id, payload FROM events WHERE status = 'pending' LIMIT 10")
+			rows, err := db.Query("SELECT id, event, payload FROM events WHERE status = 'pending' LIMIT 10")
 			if err != nil {
 				log.Printf("[ERROR] Error querying DB: %v", err)
 				continue
