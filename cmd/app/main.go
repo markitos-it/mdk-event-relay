@@ -26,8 +26,13 @@ func main() {
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()
 
+	dbPath := os.Getenv("EVENT_RELAY_DATABASE_PATH")
+	if dbPath == "" {
+		log.Fatal("unable to get EVENT_RELAY_DATABASE_PATH from relayer environment")
+	}
+
 	log.Println("[INFO] Opening SQLite database...")
-	db, err := sql.Open("sqlite3", "./events.db?_journal_mode=WAL")
+	db, err := sql.Open("sqlite3", dbPath+"?_journal_mode=WAL")
 	if err != nil {
 		log.Fatalf("[FATAL] Error opening DB: %v", err)
 	}
