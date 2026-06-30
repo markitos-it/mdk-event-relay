@@ -8,3 +8,6 @@ steps:
 
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/images/mdk-event-relay:$TAG_NAME']
+
+options:
+  logging: CLOUD_LOGGING_ONLY
