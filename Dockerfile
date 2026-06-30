@@ -8,8 +8,8 @@ RUN CGO_ENABLED=1 GOOS=linux go build -ldflags="-s -w" -o event-relay ./cmd/app/
 
 FROM alpine:latest
 RUN apk add --no-cache libc6-compat
-WORKDIR /var/lib/outbox
+WORKDIR /app
 COPY --from=builder /app/event-relay .
-RUN chown -R nobody:nobody /var/lib/outbox
+RUN mkdir -p /var/lib/outbox && chown -R nobody:nobody /var/lib/outbox /app
 USER nobody
-ENTRYPOINT ["./event-relay"]
+ENTRYPOINT ["/app/event-relay"]
