@@ -55,6 +55,10 @@ func main() {
 	busType := os.Getenv("BUS_TYPE")
 	projectID := os.Getenv("GCP_PROJECT_ID")
 	topicID := os.Getenv("GCP_TOPIC_ID")
+	if busType == "pubsub" && (projectID == "" || topicID == "") {
+		log.Fatal("unable to get GCP_PROJECT_ID or/and GCP_TOPIC_ID from relayer environment")
+
+	}
 
 	var bus domain.EventPublisher
 
